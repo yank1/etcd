@@ -1,5 +1,9 @@
 # base image source: https://git.k8s.io/release/images/build/debian-base
-FROM --platform=linux/amd64 k8s.gcr.io/build-image/debian-base:bullseye-v1.1.0
+FROM --platform=linux/amd64 k8s.gcr.io/build-image/debian-base:bullseye-v1.1.0 AS source
+
+FROM gcr.io/distroless/base-debian11
+COPY --from=source /bin/bash /bin/bash
+
 
 ADD etcd /usr/local/bin/
 ADD etcdctl /usr/local/bin/
